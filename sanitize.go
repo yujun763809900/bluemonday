@@ -313,7 +313,7 @@ func (p *Policy) sanitize(r io.Reader, w io.Writer) error {
 						skippingElementsCount++
 					}
 					if p.addSpaces {
-						if _, err := buff.WriteString(" "); err != nil {
+						if _, err := buff.WriteString(p.getSpaceWhenStrippingTagContent()); err != nil {
 							return err
 						}
 					}
@@ -332,7 +332,7 @@ func (p *Policy) sanitize(r io.Reader, w io.Writer) error {
 					skipClosingTag = true
 					closingTagToSkipStack = append(closingTagToSkipStack, token.Data)
 					if p.addSpaces {
-						if _, err := buff.WriteString(" "); err != nil {
+						if _, err := buff.WriteString(p.getSpaceWhenStrippingTagContent()); err != nil {
 							return err
 						}
 					}
@@ -369,7 +369,7 @@ func (p *Policy) sanitize(r io.Reader, w io.Writer) error {
 					skipClosingTag = false
 				}
 				if p.addSpaces {
-					if _, err := buff.WriteString(" "); err != nil {
+					if _, err := buff.WriteString(p.getSpaceWhenStrippingTagContent()); err != nil {
 						return err
 					}
 				}
@@ -392,7 +392,7 @@ func (p *Policy) sanitize(r io.Reader, w io.Writer) error {
 				}
 				if !match {
 					if p.addSpaces {
-						if _, err := buff.WriteString(" "); err != nil {
+						if _, err := buff.WriteString(p.getSpaceWhenStrippingTagContent()); err != nil {
 							return err
 						}
 					}
@@ -424,7 +424,7 @@ func (p *Policy) sanitize(r io.Reader, w io.Writer) error {
 				aa, matched := p.matchRegex(token.Data)
 				if !matched {
 					if p.addSpaces && !matched {
-						if _, err := buff.WriteString(" "); err != nil {
+						if _, err := buff.WriteString(p.getSpaceWhenStrippingTagContent()); err != nil {
 							return err
 						}
 					}
@@ -439,7 +439,7 @@ func (p *Policy) sanitize(r io.Reader, w io.Writer) error {
 
 			if len(token.Attr) == 0 && !p.allowNoAttrs(token.Data) {
 				if p.addSpaces {
-					if _, err := buff.WriteString(" "); err != nil {
+					if _, err := buff.WriteString(p.getSpaceWhenStrippingTagContent()); err != nil {
 						return err
 					}
 					break

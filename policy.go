@@ -55,6 +55,8 @@ type Policy struct {
 	// tag is replaced by a space character.
 	addSpaces bool
 
+	addSpacesContent string
+
 	// When true, add rel="nofollow" to HTML a, area, and link tags
 	requireNoFollow bool
 
@@ -769,6 +771,21 @@ func (p *Policy) AddSpaceWhenStrippingTag(allow bool) *Policy {
 	p.addSpaces = allow
 
 	return p
+}
+
+func (p *Policy) AddSpaceWhenStrippingTagContent(content string) *Policy {
+
+	p.addSpacesContent = content
+
+	return p
+}
+
+func (p *Policy) getSpaceWhenStrippingTagContent() string {
+	if p.addSpacesContent == "" {
+		return " "
+	} else {
+		return p.addSpacesContent
+	}
 }
 
 // SkipElementsContent adds the HTML elements whose tags is needed to be removed
